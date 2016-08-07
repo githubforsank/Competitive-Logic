@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution{
+
+    public static void main(String[] args) throws IOException {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        BufferedReader ob=new BufferedReader(new InputStreamReader(System.in));
+        String time=ob.readLine();
+        String hour=time.substring(0,time.indexOf(':'));
+        int index=time.indexOf(':')+1;
+        String min=time.substring(index,time.lastIndexOf(':'));
+        String sec=time.substring(time.lastIndexOf(':')+1,time.lastIndexOf(':')+3);
+        //System.out.println(time.indexOf('A'));
+        if(time.indexOf('A')==-1)// The conversion for PM goes here
+            {
+                if(Integer.parseInt(hour)+12==24)
+                    {
+                        hour="00";
+                       }
+                System.out.println(Integer.parseInt(hour)+12+":"+min+":"+sec);
+               }
+        else
+            {                       // The conversion for AM goes here
+                if(Integer.parseInt(hour)+12==24)
+                    {
+                        hour="00";
+                       }
+                System.out.println(hour+":"+min+":"+sec);
+                }
+        
+       
+    }
+}
