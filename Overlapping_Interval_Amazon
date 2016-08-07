@@ -1,0 +1,107 @@
+/* Problem explaination :
+ * Given a array of start time and end time of events . Sort the event 
+ * in chronological order and if any event overlaps then merge the events.
+ * This question was asked in on-campus interview of amazon.
+ */
+import java.io.*;
+import java.util.*;
+
+public class Overlapping_Interval {
+	public static void main(String args[]) throws IOException
+	{
+		Scanner sc=new Scanner(new BufferedReader(new InputStreamReader(System.in)));
+		System.out.println("Enter the no of events");
+		int n=sc.nextInt();
+		int array[][]=new int[2][n];
+		for(int i=0;i<n;i++)
+		{
+			array[0][i]=sc.nextInt();
+			array[1][i]=sc.nextInt();
+		}
+		
+		quick(array,0,n-1);
+		
+		int set_array[]=new int[n];
+		Arrays.fill(set_array,1);
+		merge(array,set_array,n);
+		display(array,set_array,n,2);
+	}
+	static void merge(int array[][],int set_array[], int n)
+	{
+		for(int i=0;i<n;i++)
+		{
+			for(int j=i+1;j<n;j++)
+			{
+				if(array[1][i]>=array[0][j] && set_array[j]==1)
+				{
+					set_array[j]=0;
+					array[1][i]=array[1][j];
+				}
+			}
+		}
+	}
+	static void display(int array[][],int set_array[],int n,int c)
+	{
+		if(c==1){
+		for(int i=0;i<n;i++)
+		{
+			System.out.println(array[0][i]);
+			System.out.println(array[1][i]);
+		}
+		}
+		else
+		{
+			for(int i=0;i<n;i++)
+			{
+				if(set_array[i]==1){
+				System.out.println(array[0][i]+" "+array[1][i]);
+				}
+			}
+		}
+	}
+	static int quicksort(int array[][],int m,int n)
+	{
+		//System.out.println("this245"+m+" "+n);
+		int wall=m;
+		int pivot=array[0][n];
+		//System.out.println("this"+pivot);
+		for(int i=m;i<n;i++)
+		{
+			if(array[0][i]<pivot){
+				swap(array,wall,i);
+				wall++;
+			}
+			
+		}
+		//System.out.println(wall+"th23is"); 
+		swap(array,wall,n);
+		
+		return wall;
+	}
+	static void swap(int array[][],int wall,int n){
+	//System.out.println(wall);
+		int temp1=array[0][wall];
+		int temp2=array[1][wall];
+		array[0][wall]=array[0][n];
+		array[1][wall]=array[1][n];
+		array[0][n]=temp1;
+		array[1][n]=temp2;
+	}
+	static void quick(int array[][],int m,int n)
+	{
+		if(m<n)
+		{
+			int partition=quicksort(array,m,n);
+			quick(array,m,partition-1);
+			quick(array,partition+1,n);
+		}
+	}
+		
+		
+		
+		
+		
+		
+		
+}
+
